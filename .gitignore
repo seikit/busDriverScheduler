@@ -1,5 +1,4 @@
 # Ignore files that must not be commited
-bus_service/.env-sample
 
 # IDE
 .idea
@@ -13,3 +12,7 @@ desktop.ini
 venv
 bus_service/__pycache__
 bus_service/.vscode
+bus_service/__pycache__/
+bus_service/src/__pycache__/
+bus_service/src/config/__pycache__/
+bus_service/src/config/__pycache__

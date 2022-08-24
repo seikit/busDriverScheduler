@@ -2,8 +2,8 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from src.config import settings
-from src.config.tags_metadata import tags_metadata
+from config import settings
+from config.tags_metadata import tags_metadata
 
 app = FastAPI(
     title=settings.TITLE,
