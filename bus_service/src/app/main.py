@@ -7,6 +7,7 @@ from starlette.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.config.tags_metadata import tags_metadata
 from app.models.bus import Base
+from app.routers import busRouter
 
 app = FastAPI(
     title=settings.TITLE,
@@ -34,10 +35,13 @@ def startup():
     Base.metadata.create_all(bind=engine)
 
 
+app.include_router(busRouter.router)
+
 if __name__ == "__main__":
     uvicorn.run(
         app=settings.ENTRYPOINT,
         host=settings.HOST,
         port=settings.PORT,
-        reload=settings.RELOAD
+        reload=settings.RELOAD,
+        log_config=None
     )

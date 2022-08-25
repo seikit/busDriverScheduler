@@ -10,8 +10,8 @@ Base.metadata.schema = settings.SCHEMA
 
 
 def get_db_session():
-    db = SESSION()
     try:
+        db = SESSION()
         yield db
     finally:
         db.close()
