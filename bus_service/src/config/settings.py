@@ -19,6 +19,7 @@ RELOAD = True
 # Database
 CONN = config("CONN", default=None)
 SCHEMA = config("SCHEMA", default="bus")
+DEBUG = True
 
 # Logging
 LOG_LEVEL = config("LOG_LEVEL", default="INFO")  # Valid values: INFO, DEBUG, WARNING

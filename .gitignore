@@ -1,5 +1,5 @@
 # Ignore files that must not be commited
-
+.env-*
 # IDE
 .idea
 .vscode

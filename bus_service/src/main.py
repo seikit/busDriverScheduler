@@ -1,5 +1,8 @@
+import sqlalchemy.exc
 import uvicorn
 from fastapi import FastAPI
+from sqlalchemy import create_engine
+from sqlalchemy.sql.ddl import CreateSchema
 from starlette.middleware.cors import CORSMiddleware
 
 from config import settings
@@ -19,6 +22,16 @@ app.add_middleware(
     allow_methods=settings.ALLOW_METHODS,
     allow_headers=settings.ALLOW_HEADERS
 )
+
+
+@app.on_event("startup")
+def startup():
+    engine = create_engine(settings.CONN, echo=settings.DEBUG)
+    # Check if schema already exists in the db.
+    result = engine.execute(f"SELECT schema_name FROM information_schema.schemata WHERE schema_name = '{settings.SCHEMA}';")
+    if result.rowcount == 0:
+        engine.execute(CreateSchema(settings.SCHEMA))
+
 
 if __name__ == "__main__":
     uvicorn.run(
