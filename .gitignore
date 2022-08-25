@@ -14,5 +14,5 @@ bus_service/__pycache__
 bus_service/.vscode
 bus_service/__pycache__/
 bus_service/src/__pycache__/
-bus_service/src/config/__pycache__/
-bus_service/src/config/__pycache__
+bus_service/src/app/config/__pycache__/
+bus_service/src/app/config/__pycache__

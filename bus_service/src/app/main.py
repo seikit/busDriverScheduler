@@ -1,12 +1,12 @@
-import sqlalchemy.exc
 import uvicorn
 from fastapi import FastAPI
 from sqlalchemy import create_engine
 from sqlalchemy.sql.ddl import CreateSchema
 from starlette.middleware.cors import CORSMiddleware
 
-from config import settings
-from config.tags_metadata import tags_metadata
+from app.config import settings
+from app.config.tags_metadata import tags_metadata
+from app.models.bus import Base
 
 app = FastAPI(
     title=settings.TITLE,
@@ -27,10 +27,11 @@ app.add_middleware(
 @app.on_event("startup")
 def startup():
     engine = create_engine(settings.CONN, echo=settings.DEBUG)
-    # Check if schema already exists in the db.
-    result = engine.execute(f"SELECT schema_name FROM information_schema.schemata WHERE schema_name = '{settings.SCHEMA}';")
+    result = engine.execute(
+        f"SELECT schema_name FROM information_schema.schemata WHERE schema_name = '{settings.SCHEMA}';")
     if result.rowcount == 0:
         engine.execute(CreateSchema(settings.SCHEMA))
+    Base.metadata.create_all(bind=engine)
 
 
 if __name__ == "__main__":

@@ -3,11 +3,11 @@ version: '3.4'
 services:
   bus:
     build:
-      context: bus_service
+      context: bus_service/src
       dockerfile: Dockerfile
     container_name: bus_service
     env_file:
-      - ./bus_service/.env-dev
+      - bus_service/src/app/.env-dev
     ports:
       - "127.0.0.1:8080:8080"
     volumes:
