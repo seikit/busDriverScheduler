@@ -42,6 +42,5 @@ if __name__ == "__main__":
         app=settings.ENTRYPOINT,
         host=settings.HOST,
         port=settings.PORT,
-        reload=settings.RELOAD,
-        log_config=None
+        reload=settings.RELOAD
     )
