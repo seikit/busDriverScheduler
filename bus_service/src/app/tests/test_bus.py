@@ -74,3 +74,30 @@ def test_update_bus_w_wrong_id(get_app, monkeypatch):
 
     response = get_app.put("/bus/1000/", data=json.dumps(update_data))
     assert response.status_code == 404
+
+
+def test_delete_bus(get_app, monkeypatch):
+    dummy_data = {"id": 1, "capacity": 150, "model": "Z300", "maker": "GM", "driver_id": 0}
+
+    def mock_get(self, id):
+        return dummy_data
+
+    monkeypatch.setattr(target=BusRepository, name="get", value=mock_get)
+
+    def mock_delete(self, bus_model):
+        return None
+
+    monkeypatch.setattr(target=BusRepository, name="delete", value=mock_delete)
+
+    response = get_app.delete("/bus/1/")
+    assert response.status_code == 200
+
+
+def test_delete_bus_wrong_id(get_app, monkeypatch):
+    def mock_get(self, id):
+        return None
+
+    monkeypatch.setattr(target=BusRepository, name="get", value=mock_get)
+    response = get_app.delete("/bus/2/")
+    assert response.status_code == 404
+

@@ -24,3 +24,7 @@ class BusService:
     def update_bus(self, payload: BusSchema, id: int) -> BusDb:
         bus = self.get_bus(id)
         return self.bus_repo.update(bus_model=bus, payload=payload)
+
+    def delete_bus(self, id: int) -> None:
+        bus = self.get_bus(id)
+        self.bus_repo.delete(bus_model=bus)

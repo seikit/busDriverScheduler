@@ -25,3 +25,7 @@ class BusRepository:
         bus_model.maker = payload.maker
         self.db.commit()
         return bus_model
+
+    def delete(self, bus_model: BusModel) -> None:
+        self.db.delete(bus_model)
+        self.db.commit()

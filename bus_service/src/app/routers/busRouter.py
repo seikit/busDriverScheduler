@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, Path
 from sqlalchemy.orm import Session
+from starlette.responses import Response
 
 from app.config.database import get_db_session
 from app.schemas.bus import BusSchema, BusDb
@@ -24,3 +25,8 @@ def update_bus(payload: BusSchema, id: int = Path(gt=0), db: Session = Depends(g
 @router.get("/{id}/", description="Endpoint to retrieve a bus", response_model=BusDb)
 def get_bus(id: int = Path(gt=0), db: Session = Depends(get_db_session)):
     return BusService(db_session=db).get_bus(id)
+
+
+@router.delete("/{id}/", description="Endpoint to delete a bus.")
+def delete_bus(id: int = Path(gt=0), db: Session = Depends(get_db_session)):
+    BusService(db_session=db).delete_bus(id)
