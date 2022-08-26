@@ -20,3 +20,7 @@ class BusService:
         if not bus:
             raise HTTPException(status_code=404, detail="Bus not found.")
         return bus
+
+    def update_bus(self, payload: BusSchema, id: int) -> BusDb:
+        bus = self.get_bus(id)
+        return self.bus_repo.update(bus_model=bus, payload=payload)

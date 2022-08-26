@@ -17,3 +17,11 @@ class BusRepository:
 
     def get(self, id: int):
         return self.db.query(BusModel).filter(BusModel.id == id).first()
+
+    def update(self, bus_model: BusModel, payload: BusSchema) -> BusDb:
+        bus_model.model = payload.model
+        bus_model.capacity = payload.capacity
+        bus_model.driver_id = payload.driver_id
+        bus_model.maker = payload.maker
+        self.db.commit()
+        return bus_model

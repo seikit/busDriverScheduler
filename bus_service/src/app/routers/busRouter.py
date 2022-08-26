@@ -16,6 +16,11 @@ def create_bus(payload: BusSchema, db: Session = Depends(get_db_session)):
     return BusService(db_session=db).create_bus(payload)
 
 
+@router.put("/{id}/", response_model=BusDb)
+def update_bus(payload: BusSchema, id: int = Path(gt=0), db: Session = Depends(get_db_session)):
+    return BusService(db_session=db).update_bus(payload=payload, id=id)
+
+
 @router.get("/{id}/", description="Endpoint to retrieve a bus", response_model=BusDb)
 def get_bus(id: int = Path(gt=0), db: Session = Depends(get_db_session)):
     return BusService(db_session=db).get_bus(id)
