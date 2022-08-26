@@ -14,3 +14,6 @@ class BusRepository:
         self.db.commit()
         self.db.refresh(bus_model)
         return bus_model
+
+    def get(self, id: int):
+        return self.db.query(BusModel).filter(BusModel.id == id).first()

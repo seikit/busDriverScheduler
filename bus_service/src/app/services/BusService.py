@@ -1,5 +1,6 @@
 import logging
 
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from app.repositories.BusRepository import BusRepository
 from app.schemas.bus import BusDb, BusSchema
@@ -13,3 +14,9 @@ class BusService:
 
     def create_bus(self, payload: BusSchema) -> BusDb:
         return self.bus_repo.post(payload)
+
+    def get_bus(self, id: int) -> BusDb:
+        bus: BusDb = self.bus_repo.get(id)
+        if not bus:
+            raise HTTPException(status_code=404, detail="Bus not found.")
+        return bus
