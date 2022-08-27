@@ -1,11 +1,12 @@
 from pydantic import BaseModel, Field
-from datetime import date
+from datetime import date, datetime
 
 
 class ScheduleSchema(BaseModel):
     bus_id: int = Field(gt=0)
     driver_id: int = Field(gt=0)
-    shift: date
+    start_dt: datetime
+    end_dt: datetime
 
 
 class ScheduleDb(ScheduleSchema):

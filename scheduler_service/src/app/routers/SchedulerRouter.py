@@ -1,3 +1,6 @@
+from datetime import date
+from typing import List
+
 from fastapi import APIRouter, Depends, Path
 from sqlalchemy.orm import Session
 from app.config.database import get_db_session
@@ -23,6 +26,16 @@ def update_schedule(payload: ScheduleSchema, id: int = Path(gt=0), db: Session =
 @router.get("/{id}/", description="Endpoint to retrieve a schedule", response_model=ScheduleDb)
 def get_schedule(id: int = Path(gt=0), db: Session = Depends(get_db_session)):
     return ScheduleService(db_session=db).get_schedule(id)
+
+
+@router.get("/bus/{id}/", description="Endpoint to get week schedules of a bus.", response_model=List[ScheduleDb])
+def get_week_schedules_by_bus(dt: date, bus_id: int = Path(gt=0), db: Session = Depends(get_db_session)):
+    return ScheduleService(db_session=db).get_week_schedules_by_bus(dt, bus_id)
+
+
+@router.get("/driver/{id}/", description="Endpoint to get week schedules of a driver.", response_model=List[ScheduleDb])
+def get_week_schedules_by_driver(dt: date, driver_id: int = Path(gt=0), db: Session = Depends(get_db_session)):
+    return ScheduleService(db_session=db).get_week_schedules_by_driver(dt, driver_id)
 
 
 @router.delete("/{id}/", description="Endpoint to delete a schedule.")
