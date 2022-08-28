@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: bus_service
     env_file:
-      - bus_service/src/app/.env-dev
+      - bus_service/.env-bus-dev
     ports:
       - "127.0.0.1:8080:8080"
     volumes:
@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
     container_name: driver_service
     env_file:
-      - .env-driver-dev
+      - driver_service/.env-driver-dev
     ports:
       - "127.0.0.1:8081:8081"
     volumes:
@@ -35,7 +35,7 @@ services:
       dockerfile: Dockerfile
     container_name: scheduler_service
     env_file:
-      - ./.env-scheduler-dev
+      - ./scheduler_service/.env-scheduler-dev
     ports:
       - "127.0.0.1:8082:8082"
     volumes:

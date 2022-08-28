@@ -3,6 +3,7 @@ from app.config.database import Base
 
 
 class BusModel(Base):
+    # Represents the bus db table.
     __tablename__ = "bus"
 
     id = Column(Integer, primary_key=True)

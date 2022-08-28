@@ -1,6 +1,10 @@
 from starlette.config import Config
 
-config = Config(".env-dev")
+"""
+File used for centralizing the application config. It reads sensitive information from .env files.
+"""
+
+config = Config(".env-driver-dev")
 
 # APPLICATION
 ENTRYPOINT = "main:app"

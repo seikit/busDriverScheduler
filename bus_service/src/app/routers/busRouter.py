@@ -6,6 +6,7 @@ from app.config.database import get_db_session
 from app.schemas.bus import BusSchema, BusDb
 from app.services.BusService import BusService
 
+# Requests entrypoint. Similar to a controller class.
 router = APIRouter(
     prefix="/bus",
     tags=["Bus"]

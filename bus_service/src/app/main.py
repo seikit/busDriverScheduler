@@ -9,6 +9,7 @@ from app.config.tags_metadata import tags_metadata
 from app.models.bus import Base
 from app.routers import busRouter
 
+# Application entrypoint
 app = FastAPI(
     title=settings.TITLE,
     description=settings.DESCRIPTION,
@@ -27,6 +28,10 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup():
+    """
+    It runs right after the application starts. It is used to create the database schema and bus table.
+    :return: None
+    """
     engine = create_engine(settings.CONN, echo=settings.DEBUG)
     result = engine.execute(
         f"SELECT schema_name FROM information_schema.schemata WHERE schema_name = '{settings.SCHEMA}';")

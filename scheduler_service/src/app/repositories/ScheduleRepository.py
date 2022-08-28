@@ -9,6 +9,7 @@ from app.schemas.Schedule import ScheduleSchema, ScheduleDb
 
 
 class ScheduleRepository:
+    #  Database layer connect all db operation are done here.
     def __init__(self, session: Session):
         self.db = session
 

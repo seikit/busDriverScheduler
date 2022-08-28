@@ -1,5 +1,9 @@
 from starlette.config import Config
 
+"""
+File used for centralizing the application config. It reads sensitive information from .env files.
+"""
+
 config = Config(".env-scheduler-dev")
 
 # APPLICATION

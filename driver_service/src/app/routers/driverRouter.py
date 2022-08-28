@@ -4,6 +4,7 @@ from app.config.database import get_db_session
 from app.schemas.driver import DriverSchema, DriverDb
 from app.services.DriverService import DriverService
 
+# The requests entrypoint. Is similar to a controller class.
 router = APIRouter(
     prefix="/driver",
     tags=["Driver"]

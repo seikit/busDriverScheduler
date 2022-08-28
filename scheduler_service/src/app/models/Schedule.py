@@ -3,6 +3,7 @@ from app.config.database import Base
 
 
 class ScheduleModel(Base):
+    # Represents the schedule db table.
     __tablename__ = "schedule"
 
     id = Column(Integer, primary_key=True)
