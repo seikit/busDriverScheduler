@@ -19,7 +19,7 @@ class ScheduleRepository:
         self.db.refresh(schedule_model)
         return schedule_model
 
-    def get(self, id: int):
+    def get(self, id: int) -> ScheduleDb:
         return self.db.query(ScheduleModel).filter(ScheduleModel.id == id).first()
 
     def get_schedule_between(self, start_dt: date, end_dt: date) -> List[ScheduleDb]:
