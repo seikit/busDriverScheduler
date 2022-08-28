@@ -25,3 +25,7 @@ DEBUG = False
 ALLOW_ORIGINS = ["http://localhost", "http://localhost:3000"]
 ALLOW_METHODS = ["POST", "GET", "PUT", "DELETE"]
 ALLOW_HEADERS = ["*"]
+
+# Services
+DRIVER_SERVICE_URL = config("DRIVER_SERVICE_URL", default="http://driver:8081/driver")
+BUS_SERVICE_URL = config("BUS_SERVICE_URL", default="http://bus:8080/bus")

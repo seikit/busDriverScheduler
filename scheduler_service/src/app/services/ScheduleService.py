@@ -4,6 +4,9 @@ from typing import List
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
+
+from app.apis.driver_api import DriverAPI
+from app.apis.bus_api import BusAPI
 from app.repositories.ScheduleRepository import ScheduleRepository
 from app.schemas.BusSchedule import BusSchedule
 from app.schemas.DriverSchedule import DriverSchedule
@@ -18,12 +21,29 @@ class ScheduleService:
     def __init__(self, db_session: Session):
         self.schedule_repo = ScheduleRepository(session=db_session)
         self.calendar = Calendar()
+        self.driver_api = DriverAPI()
+        self.bus_api = BusAPI()
+
+    def get_driver_and_bus(self, payload: ScheduleSchema) -> tuple:
+        driver: dict = self.driver_api.get_driver_by_id(payload.driver_id)
+        if not driver:
+            raise HTTPException(status_code=500, detail="Failed to create schedule. Try again later.")
+
+        bus: dict = self.bus_api.get_bus_by_id(payload.bus_id)
+        if not bus:
+            raise HTTPException(status_code=500, detail="Failed to create schedule. Try again later.")
+        return driver, bus
 
     def create_schedule(self, payload: ScheduleSchema) -> ScheduleDb:
+        driver, bus = self.get_driver_and_bus(payload)
+
         self.calendar.schedules = self.get_schedule_by_week(payload.start_dt.date())
         is_shift_available = self.calendar.check_availability(payload.start_dt, payload.end_dt, payload.driver_id, payload.bus_id)
         if is_shift_available:
-            return self.schedule_repo.post(payload)
+            schedule: ScheduleDb = self.schedule_repo.post(payload)
+            print(f">>> Driver {driver['first_name']} will be driving bus model {bus['model']} from maker"
+                  f" {bus['maker']} between {schedule.start_dt} and {schedule.end_dt}.")
+            return schedule
         raise HTTPException(status_code=500, detail="Shift is not available. Pick another date.")
 
     def get_schedule_by_week(self, dt: date) -> List[ScheduleDb]:

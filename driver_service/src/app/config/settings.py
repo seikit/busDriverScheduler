@@ -22,6 +22,6 @@ SCHEMA = config("SCHEMA", default="driver")
 DEBUG = False
 
 # CORS
-ALLOW_ORIGINS = ["http://localhost", "http://localhost:3000"]
+ALLOW_ORIGINS = ["*"]
 ALLOW_METHODS = ["POST", "GET", "PUT", "DELETE"]
 ALLOW_HEADERS = ["*"]
