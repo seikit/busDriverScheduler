@@ -34,6 +34,10 @@ class ScheduleService:
             raise HTTPException(status_code=500, detail="Failed to create schedule. Try again later.")
         return driver, bus
 
+    def update_bus_driver(self, bus: dict, driver: dict) -> None:
+        bus["driver_id"] = driver["id"]
+        self.bus_api.update_bus(bus)
+
     def create_schedule(self, payload: ScheduleSchema) -> ScheduleDb:
         driver, bus = self.get_driver_and_bus(payload)
 
@@ -43,6 +47,8 @@ class ScheduleService:
             schedule: ScheduleDb = self.schedule_repo.post(payload)
             print(f">>> Driver {driver['first_name']} will be driving bus model {bus['model']} from maker"
                   f" {bus['maker']} between {schedule.start_dt} and {schedule.end_dt}.")
+
+            self.update_bus_driver(bus, driver)
             return schedule
         raise HTTPException(status_code=500, detail="Shift is not available. Pick another date.")
 
