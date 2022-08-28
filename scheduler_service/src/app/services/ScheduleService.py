@@ -5,6 +5,8 @@ from typing import List
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from app.repositories.ScheduleRepository import ScheduleRepository
+from app.schemas.BusSchedule import BusSchedule
+from app.schemas.DriverSchedule import DriverSchedule
 from app.schemas.Calendar import Calendar
 from app.schemas.Schedule import ScheduleDb, ScheduleSchema
 from app.utils import date_util
@@ -24,13 +26,19 @@ class ScheduleService:
             return self.schedule_repo.post(payload)
         raise HTTPException(status_code=500, detail="Shift is not available. Pick another date.")
 
-    def get_schedule_by_driver_bus_and_week(self, driver_id: int, bus_id: int, dt: date) -> List[ScheduleDb]:
-        start, end = date_util.get_start_and_end_wk_dt(dt)
-        return self.schedule_repo.get_schedules_by_driver_bus_and_week(driver_id, bus_id, start, end)
-
     def get_schedule_by_week(self, dt: date) -> List[ScheduleDb]:
         start, end = date_util.get_start_and_end_wk_dt(dt)
         return self.schedule_repo.get_schedule_between(start, end)
+
+    def get_bus_week_schedules(self, dt: date) -> List[BusSchedule]:
+        start, end = date_util.get_start_and_end_wk_dt(dt)
+        schedules: List[ScheduleDb] = self.schedule_repo.get_schedule_between(start, end)
+        return [BusSchedule(**ScheduleDb.from_orm(schedule).dict()) for schedule in schedules]
+
+    def get_driver_week_schedules(self, dt: date) -> List[DriverSchedule]:
+        start, end = date_util.get_start_and_end_wk_dt(dt)
+        schedules: List[ScheduleDb] = self.schedule_repo.get_schedule_between(start, end)
+        return [DriverSchedule(**ScheduleDb.from_orm(schedule).dict()) for schedule in schedules]
 
     def get_schedule(self, id: int) -> ScheduleDb:
         schedule: ScheduleDb = self.schedule_repo.get(id)
