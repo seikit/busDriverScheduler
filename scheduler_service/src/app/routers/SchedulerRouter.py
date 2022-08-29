@@ -9,6 +9,8 @@ from app.schemas.DriverSchedule import DriverSchedule
 from app.schemas.Schedule import ScheduleSchema, ScheduleDb
 from app.services.ScheduleService import ScheduleService
 
+# The requests entrypoint. Similar to a controller.
+
 router = APIRouter(
     prefix="/schedule",
     tags=["Scheduler"]

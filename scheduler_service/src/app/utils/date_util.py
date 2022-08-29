@@ -1,16 +1,6 @@
 from datetime import date, timedelta
 
 
-def get_wk_dt(dt: date) -> str:
-    """
-    Get the week day eg: Monday, Tuesday ...
-    :param dt: a date.
-    :return: week date.
-    """
-
-    pass
-
-
 def get_start_and_end_wk_dt(dt: date) -> tuple:
     """
     Get the start and end of the week based on a date.

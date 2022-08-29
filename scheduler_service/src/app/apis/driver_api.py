@@ -5,7 +5,7 @@ import requests
 from app.config import settings
 from fastapi import HTTPException
 
-
+# Api class to connect to the bus service.
 logger = logging.getLogger(__name__)
 
 
@@ -14,6 +14,11 @@ class DriverAPI:
         self.url = settings.DRIVER_SERVICE_URL
 
     def get_driver_by_id(self, id: int) -> dict:
+        """
+        Get a driver by id.
+        :param id: The driver id to search.
+        :return: The driver.
+        """
         try:
             response = requests.get(f"{self.url}/{id}")
             if response.status_code == 200:
