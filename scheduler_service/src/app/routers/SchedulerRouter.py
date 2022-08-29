@@ -32,12 +32,12 @@ def get_schedule(id: int = Path(gt=0), db: Session = Depends(get_db_session)):
     return ScheduleService(db_session=db).get_schedule(id)
 
 
-@router.get("/bus/", description="Endpoint to get week schedules for buses.", response_model=List[BusSchedule])
+@router.get("/bus", description="Endpoint to get week schedules for buses.", response_model=List[BusSchedule])
 def get_bus_week_schedules(dt: date, db: Session = Depends(get_db_session)):
     return ScheduleService(db_session=db).get_bus_week_schedules(dt)
 
 
-@router.get("/driver/", description="Endpoint to get week schedules for drivers.", response_model=List[DriverSchedule])
+@router.get("/driver", description="Endpoint to get week schedules for drivers.", response_model=List[DriverSchedule])
 def get_driver_week_schedules(dt: date, db: Session = Depends(get_db_session)):
     return ScheduleService(db_session=db).get_driver_week_schedules(dt)
 
